@@ -1,0 +1,7 @@
+Lemon
+Whiskey
+Orange
+Rum
+Create New Drink,0,0,0,0,0
+MyCustomSoda,50,25,0,0,25
+TestSode2,10,10,10,10,60
