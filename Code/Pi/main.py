@@ -1,4 +1,4 @@
-from guizero import App, Box, PushButton, Slider, ListBox, Window, Text
+from guizero import App, Box, PushButton, Slider, ListBox, Window, Text, TextBox
 import csv
 app = App()
 
@@ -21,7 +21,13 @@ settingsFileName = "C:\git\SodaShop\Code\Pi\settings.txt"
 # Writable Global Variables
 flavors = ["Edit Flavor 1", "Edit Flavor 2", "Edit Flavor 3", "Edit Flavor 4"]
 drinks = []
-currentDrink = 1
+currentDrink = {'value':0}
+newDrinkFlag = {'value':False}
+max_slider_width = 400
+
+# To edit values such as currentDrink
+def modify_value(data_dict, newValue):
+  data_dict['value'] = newValue
 
 # Load Previous Settings
 with open(settingsFileName, "r") as settingsContent:
@@ -50,60 +56,87 @@ def saveSettings():
       writer.writerow([drink.name, drink.flavor1Perc, drink.flavor2Perc, drink.flavor3Perc, drink.flavor4Perc, drink.carbPerc])
 
 # Edit Selected Drink Menu
-def editDrink(drink):
+def editDrink():
+  drink = drinks[int(currentDrink['value'])]
+
   # When Exit Button Pressed, Close New Drink Window
   def closeWindow():
     makeDrinkWindow.hide()
     makeDrinkWindow.destroy()
   
-  def update_slider_limits(changed_slider, sliders):
-    total = sum(s.value for s in sliders)
-    remaining = 100 - (total - changed_slider.value)
+  def editSliderConstraints(slider):
+    total = sum(s.value for s in sliders)  # Get total slider value
+    remaining = max(100 - total, 0)  # Ensure remaining is non-negative
 
-    # Ensure the changed slider can never exceed its available range
-    changed_slider.end = min(100, remaining + changed_slider.value)
-
-    # Update all other sliders' end values
     for s in sliders:
-        if s != changed_slider:
-            s.end = min(100, remaining + s.value)
+      if s != slider:  
+        s.end = min(100, s.value + remaining)  # Adjust max limit
+        
+      # Adjust slider width based on its available range
+      if s.value == 0 and total == 100:
+        s.width = 0  # Hide slider if its value is 0 and total is maxed
+      else:
+        min_width = 50  # Minimum width for usability
+        s.width = max(min_width, int((s.end / 100) * max_slider_width))
+  
+  def saveDrink():
+    newDrink = Drink(nameText.value, flavor1Slider.value, flavor2Slider.value, flavor3Slider.value, flavor4Slider.value, carbSlider.value)
+    drinks.append(newDrink)
+    drinkList.append(newDrink.name)
+    drinkNames.append(newDrink.name)
+    if (not newDrinkFlag['value']):
+      drinks.remove(drink)
+      drinkList.remove(drink.name)
+      drinkNames.remove(drink.name)
+    modify_value(newDrinkFlag, False)
+    saveSettings()
+    closeWindow()
 
   makeDrinkWindow = Window(app, title="Create your drink")
   makeDrinkWindow.show(wait=True)
   settingsBox = Box(makeDrinkWindow, width="fill", align="top")
+
   exitButton = PushButton(settingsBox, text="Back", command=closeWindow, align="left")
+
   flavorEditterBox = Box(makeDrinkWindow, layout="grid", align="left")
 
   flavor1Label = Text(flavorEditterBox, text=flavors[0], grid=[0,0])
-  flavor1Slider = Slider(flavorEditterBox, grid=[1,0])
+  flavor1Slider = Slider(flavorEditterBox, grid=[1,0], command=editSliderConstraints, align="left", height="20")
   flavor1Slider.value = drink.flavor1Perc
   
   flavor2Label = Text(flavorEditterBox, text=flavors[1], grid=[0,1])
-  flavor2Slider = Slider(flavorEditterBox, grid=[1, 1])
+  flavor2Slider = Slider(flavorEditterBox, grid=[1, 1], command=editSliderConstraints, align="left", height="20")
   flavor2Slider.value = drink.flavor2Perc
   
   flavor3Label = Text(flavorEditterBox, text=flavors[2], grid=[0,2])
-  flavor3Slider = Slider(flavorEditterBox, grid=[1,2])
+  flavor3Slider = Slider(flavorEditterBox, grid=[1,2], command=editSliderConstraints, align="left", height="20")
   flavor3Slider.value = drink.flavor3Perc
   
   flavor4Label = Text(flavorEditterBox, text=flavors[3], grid=[0,3])
-  flavor4Slider = Slider(flavorEditterBox, grid=[1,3])
+  flavor4Slider = Slider(flavorEditterBox, grid=[1,3], command=editSliderConstraints, align="left", height="20")
   flavor4Slider.value = drink.flavor4Perc
   
   carbLabel = Text(flavorEditterBox, text="Carbonation", grid=[0,4])
-  carbSlider = Slider(flavorEditterBox, grid=[1,4])
+  carbSlider = Slider(flavorEditterBox, grid=[1,4], command=editSliderConstraints, align="left", height="20")
   carbSlider.value = drink.carbPerc
+
+  sliders = [flavor1Slider, flavor2Slider, flavor3Slider, flavor4Slider, carbSlider]
+
+  saveButton = PushButton(settingsBox, text="Save", align="right", command=saveDrink)
+  nameText = TextBox(settingsBox, text=drink.name, align="top", width="fill")
 
 # Select Drink Function
 def selectDrink(selection):
 
-  currentDrink = drinkNames.index(selection)
+  modify_value(currentDrink, drinkNames.index(selection))
   # Create New Drink Menu
   if (selection == editDrinkText):
-    editDrink(drinks[int(currentDrink)])
+    modify_value(newDrinkFlag, True)
+    editDrink()
   # Load Selected Drink
   else:
-    dispenseButton.text = drinks[int(currentDrink)].name
+    print(int(currentDrink['value']))
+    dispenseButton.text = drinks[int(currentDrink['value'])].name
 
 # Edit Flavor Menu
 def editFlavor(selection):
@@ -135,7 +168,7 @@ flavor2Button = PushButton(flavorsSettingsBox, text=flavors[1], align="left", co
 flavor3Button = PushButton(flavorsSettingsBox, text=flavors[2], align="left", command=editFlavor, args="3")
 flavor4Button = PushButton(flavorsSettingsBox, text=flavors[3], align="left", command=editFlavor, args="4")
 
-editDrinkButton = PushButton(flavorsSettingsBox, text="Edit Selected Drink", align="right", command=editDrink, args=[drinks[int(currentDrink)]])
-dispenseButton = PushButton(app, text=drinks[int(currentDrink)].name, width="fill", height="fill")
+editDrinkButton = PushButton(flavorsSettingsBox, text="Edit Selected Drink", align="right", command=editDrink)
+dispenseButton = PushButton(app, text=drinks[int(currentDrink['value'])].name, width="fill", height="fill")
 
 app.display()
