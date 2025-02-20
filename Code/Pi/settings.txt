@@ -1,9 +1,20 @@
 Lemon
-Whiskey
-something
 Rum
-Create New Drink,0,0,0,0,0
-MyCustomSoda,50,25,0,0,25
-New Drink Test,47,41,0,0,0
-test,16,8,1,71,2
-RemoveCustomSoda,26,0,11,43,20
+Pineapple
+Blueberry
+Create New Flavor
+None
+Lemon
+Orange
+Grape
+Cherry
+Pineapple
+Blueberry
+Rum
+Vodka
+Create New Drink
+Vodka,0,0,0,100,0,None,None,None,Vodka
+test,1,29,7,0,47,Lemon,Grape,Pineapple,None
+New Drink Test,44,55,0,1,0,Lemon,Rum,Pineapple,Orange
+Valid Test,48,12,0,0,40,Lemon,Pineapple,None,None
+Invalid Drink,0,0,100,0,0,Lemon,Rum,Cherry,Blueberry
