@@ -1,8 +1,7 @@
-Lemon
-Rum
-Pineapple
-Blueberry
-Create New Flavor
+Orange
+None
+Cherry
+Vodka
 None
 Lemon
 Orange
@@ -12,9 +11,13 @@ Pineapple
 Blueberry
 Rum
 Vodka
+Sprite
+Coke
+Dr. P
 Create New Drink
-Vodka,0,0,0,100,0,None,None,None,Vodka
 test,1,29,7,0,47,Lemon,Grape,Pineapple,None
 New Drink Test,44,55,0,1,0,Lemon,Rum,Pineapple,Orange
-Valid Test,48,12,0,0,40,Lemon,Pineapple,None,None
-Invalid Drink,0,0,100,0,0,Lemon,Rum,Cherry,Blueberry
+Valid Test,48,12,0,0,40,Lemon,Vodka,None,None
+Invalid Drink1,0,0,100,0,0,Lemon,Rum,Cherry,Blueberry
+Vodka + Lemon,0,0,17,83,0,None,None,Lemon,Vodka
+Test Drink 0,14,0,15,0,56,Coke,None,Cherry,Vodka

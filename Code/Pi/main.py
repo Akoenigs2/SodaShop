@@ -124,16 +124,16 @@ def editDrink():
                      flavor1Label.value, flavor2Label.value, flavor3Label.value, flavor4Label.value)
     drinks.append(newDrink)
 
-    if ((newDrink.flavor1Perc > 0) and (not newDrink.flavor1Name in chosenFlavors)):
+    if ((newDrink.flavor1Perc > 0) and (not newDrink.flavor1Name in chosenFlavors) and (not newDrink.flavor1Name == "None")):
       invalidDrinkNames.append(newDrink.name)
       invalidDrinkList.append(newDrink.name)
-    elif ((newDrink.flavor2Perc > 0) and (not newDrink.flavor2Name in chosenFlavors)):
+    elif ((newDrink.flavor2Perc > 0) and (not newDrink.flavor2Name in chosenFlavors) and (not newDrink.flavor2Name == "None")):
       invalidDrinkNames.append(newDrink.name)
       invalidDrinkList.append(newDrink.name)
-    elif ((newDrink.flavor3Perc > 0) and (not newDrink.flavor3Name in chosenFlavors)):
+    elif ((newDrink.flavor3Perc > 0) and (not newDrink.flavor3Name in chosenFlavors) and (not newDrink.flavor3Name == "None")):
       invalidDrinkNames.append(newDrink.name)
       invalidDrinkList.append(newDrink.name)
-    elif ((newDrink.flavor4Perc > 0) and (not newDrink.flavor4Name in chosenFlavors)):
+    elif ((newDrink.flavor4Perc > 0) and (not newDrink.flavor4Name in chosenFlavors) and (not newDrink.flavor4Name == "None")):
       invalidDrinkNames.append(newDrink.name)
       invalidDrinkList.append(newDrink.name)
     else:
@@ -224,9 +224,29 @@ def selectDrink(selection):
       break
   # Load Selected Drink
   if (validDrinkSelection['value']):
-    dispenseButton.text = currentDrink['value'].name
+    dispenseButton.text = "Dispense: " + currentDrink['value'].name + "\n"
   else:
-    dispenseButton.text = "Not correct flavors, please load: ..."
+    dispenseButton.text = "Not correct flavors, please load: "
+    if (not currentDrink['value'].flavor1Name in chosenFlavors) and (currentDrink['value'].flavor1Perc > 0) and (not currentDrink['value'].flavor1Name == "None"):
+      dispenseButton.text += currentDrink['value'].flavor1Name + ", "
+    if (not currentDrink['value'].flavor2Name in chosenFlavors) and (currentDrink['value'].flavor2Perc > 0) and (not currentDrink['value'].flavor2Name == "None"):
+      dispenseButton.text += currentDrink['value'].flavor2Name + ", "
+    if (not currentDrink['value'].flavor3Name in chosenFlavors) and (currentDrink['value'].flavor3Perc > 0) and (not currentDrink['value'].flavor3Name == "None"):
+      dispenseButton.text += currentDrink['value'].flavor3Name + ", "
+    if (not currentDrink['value'].flavor4Name in chosenFlavors) and (currentDrink['value'].flavor4Perc > 0) and (not currentDrink['value'].flavor4Name == "None"):
+      dispenseButton.text += currentDrink['value'].flavor4Name + ", "
+    dispenseButton.text = dispenseButton.text[:-2] + "\n"
+  
+  dispenseButton.text += "Needed Flavors: "
+  if (currentDrink['value'].flavor1Perc > 0) and (not currentDrink['value'].flavor1Name == "None"):
+    dispenseButton.text += currentDrink['value'].flavor1Name + ", "
+  if (currentDrink['value'].flavor2Perc > 0) and (not currentDrink['value'].flavor2Name == "None"):
+    dispenseButton.text += currentDrink['value'].flavor2Name + ", "
+  if (currentDrink['value'].flavor3Perc > 0) and (not currentDrink['value'].flavor3Name == "None"):
+    dispenseButton.text += currentDrink['value'].flavor3Name + ", "
+  if (currentDrink['value'].flavor4Perc > 0) and (not currentDrink['value'].flavor4Name == "None"):
+    dispenseButton.text += currentDrink['value'].flavor4Name + ", "
+  dispenseButton.text = dispenseButton.text[:-2]
 
 def selectInvalidDrink(selection):
   modify_value(validDrinkSelection, False)
@@ -247,63 +267,68 @@ def editFlavor(selection):
     flavorWindow.destroy()
     updateDrinkNameLists()
 
+  def createNewFlavor():
+    flavorQuestion = flavorWindow.question("Flavor Edit", "Enter new flavor name")
+    if (not flavorQuestion in flavors):
+      flavors.append(flavorQuestion)
+      chooseFlavorList.append(flavorQuestion)
+
   def chooseFlavor(flavor):
-    if (flavor == editFlavorText):
-      flavorQuestion = app.question("Flavor Edit", "Enter new flavor name")
-      if (not flavorQuestion in flavors):
-        flavors.append(flavorQuestion)
-        chooseFlavorList.append(flavorQuestion)
-    else:
-      if (selection == "1"):
-        chosenFlavors[0] = flavor + "\n"
-        flavor1Button.text = flavor
-        saveSettings()
-        closeWindow()
-      elif (selection == "2"):
-        chosenFlavors[1] = flavor + "\n"
-        flavor2Button.text = flavor
-        saveSettings()
-        closeWindow()
-      elif (selection == "3"):
-        chosenFlavors[2] = flavor + "\n"
-        flavor3Button.text = flavor
-        saveSettings()
-        closeWindow()
-      elif (selection == "4"):
-        chosenFlavors[3] = flavor + "\n"
-        flavor4Button.text = flavor
-        saveSettings()
-        closeWindow()
+    if (selection == "1"):
+      chosenFlavors[0] = flavor
+      flavor1Button.text = flavor
+    elif (selection == "2"):
+      chosenFlavors[1] = flavor
+      flavor2Button.text = flavor
+    elif (selection == "3"):
+      chosenFlavors[2] = flavor
+      flavor3Button.text = flavor
+    elif (selection == "4"):
+      chosenFlavors[3] = flavor
+      flavor4Button.text = flavor
+
+    saveSettings()
+    closeWindow()
 
   flavorWindow = Window(app, title="Swap Flavor")
   flavorWindow.show(wait=True)
   settingsBox = Box(flavorWindow, width="fill", align="top")
   exitButton = PushButton(settingsBox, text="Back", command=closeWindow, align="left")
+  newFlavorButton = PushButton(settingsBox, text="Create New Flavor", command=createNewFlavor, align="right")
 
   chooseFlavorList = ListBox(flavorWindow, items=flavors, align="left", height="fill", command=chooseFlavor)
 
   saveSettings()
 
 def updateDrinkNameLists():
+  drinkNames.clear()
+  invalidDrinkNames.clear()
+  validDrinkList.clear()
+  invalidDrinkList.clear()
   for drink in drinks:
-    if not drink.flavor1Name in chosenFlavors:
+    if ((drink.flavor1Perc > 0) and (not drink.flavor1Name in chosenFlavors) and (not drink.flavor1Name == "None")):
       invalidDrinkNames.append(drink.name)
-    elif not drink.flavor2Name in chosenFlavors:
+      invalidDrinkList.append(drink.name)
+    elif ((drink.flavor2Perc > 0) and (not drink.flavor2Name in chosenFlavors) and (not drink.flavor2Name == "None")):
       invalidDrinkNames.append(drink.name)
-    elif not drink.flavor3Name in chosenFlavors:
+      invalidDrinkList.append(drink.name)
+    elif ((drink.flavor3Perc > 0) and (not drink.flavor3Name in chosenFlavors) and (not drink.flavor3Name == "None")):
       invalidDrinkNames.append(drink.name)
-    elif not drink.flavor4Name in chosenFlavors:
+      invalidDrinkList.append(drink.name)
+    elif ((drink.flavor4Perc > 0) and (not drink.flavor4Name in chosenFlavors) and (not drink.flavor4Name == "None")):
       invalidDrinkNames.append(drink.name)
+      invalidDrinkList.append(drink.name)
     else:
       drinkNames.append(drink.name)
+      validDrinkList.append(drink.name)
 
 # Main Menu Widgets and Logic
 drinkNames = []
 invalidDrinkNames = []
-updateDrinkNameLists()
 drinkListBox = Box(app, height="fill", align="right")
 validDrinkList = ListBox(drinkListBox, items=drinkNames, height="fill", align="top", command=selectionValidDrink, scrollbar=True)
 invalidDrinkList = ListBox(drinkListBox, items=invalidDrinkNames, height="fill", align="bottom", command=selectInvalidDrink, scrollbar = True)
+updateDrinkNameLists()
 
 flavorsSettingsBox = Box(app, width="fill", align="top", border=True)
 flavor1Button = PushButton(flavorsSettingsBox, text=chosenFlavors[0], align="left", command=editFlavor, args="1")
