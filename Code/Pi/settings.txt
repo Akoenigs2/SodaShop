@@ -1,23 +1,18 @@
-Orange
-None
-Cherry
-Vodka
-None
-Lemon
-Orange
-Grape
-Cherry
-Pineapple
-Blueberry
-Rum
-Vodka
-Sprite
-Coke
-Dr. P
+Cherry,#d96962
+Rum,#e0e0e0
+Coke,#804000
+Lemon,#fff93d
+None,#ffffff
+Cherry,#d96962
+Rum,#e0e0e0
+Pineapple,#e0dc58
+Sprite,#dbdac1
+Lemon,#fff93d
+Orange,#e3a41b
+Grape,#8000ff
+Blueberry,#3c02fa
+Vodka,#dfdee3
+Coke,#804000
 Create New Drink
-test,1,29,7,0,47,Lemon,Grape,Pineapple,None
-New Drink Test,44,55,0,1,0,Lemon,Rum,Pineapple,Orange
-Valid Test,48,12,0,0,40,Lemon,Vodka,None,None
-Invalid Drink1,0,0,100,0,0,Lemon,Rum,Cherry,Blueberry
-Vodka + Lemon,0,0,17,83,0,None,None,Lemon,Vodka
-Test Drink 0,14,0,15,0,56,Coke,None,Cherry,Vodka
+textTest,100,0,0,0,0,Cherry,Lemon,Coke,None
+Invalid,0,0,67,0,0,Cherry,Rum,Lemon,None
