@@ -1,7 +1,7 @@
-Cherry,#d96962
-Rum,#e0e0e0
+Vodka,#dfdee3
 Coke,#804000
-Lemon,#fff93d
+Rum,#e0e0e0
+Sprite,#dbdac1
 None,#ffffff
 Cherry,#d96962
 Rum,#e0e0e0
@@ -13,6 +13,13 @@ Grape,#8000ff
 Blueberry,#3c02fa
 Vodka,#dfdee3
 Coke,#804000
+Simple Syrup,#c0c0c0
+Crown Royal,#804040
+Lime Juice,#00ff80
+,#ffffff
+Bitters,#804040
 Create New Drink
-textTest,100,0,0,0,0,Cherry,Lemon,Coke,None
-Invalid,0,0,67,0,0,Cherry,Rum,Lemon,None
+Whiskey Sour,10,65,25,0,0,Simple Syrup,Crown Royal,Lime Juice,None
+Old Fasion,5,90,0,5,0,Simple Syrup,Crown Royal,Lime Juice,Bitters
+Vodka Sprite,0,0,40,60,0,None,None,Vodka,Sprite
+Rum and Coke,0,0,65,35,0,None,None,Coke,Rum

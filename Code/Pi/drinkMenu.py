@@ -1,5 +1,6 @@
 import parms
 import settings
+import subprocess
 from guizero import Slider, Combo, Window, PushButton, Box, Text, TextBox
 
 # Edit Selected Drink Menu
@@ -91,9 +92,13 @@ def editDrink():
     settings.saveSettings()
     homeMenu.dispenseButton.text = "Select a Drink"
     closeWindow()
+  
+  def show_keyboard(event):
+    subprocess.Popen(["onboard"])
 
   makeDrinkWindow = Window(parms.app, title="Create your drink")
   makeDrinkWindow.show(wait=True)
+  makeDrinkWindow.set_full_screen()
   settingsBox = Box(makeDrinkWindow, width="fill", align="top")
 
   exitButton = PushButton(settingsBox, text="Back", command=closeWindow, align="left")
@@ -144,3 +149,4 @@ def editDrink():
   saveButton = PushButton(settingsBox, text="Save", align="right", command=saveDrink)
   deleteButton = PushButton(settingsBox, text="Delete", align="left", command=deleteDrink)
   nameText = TextBox(settingsBox, text=drink.name, align="top", width="fill")
+  nameText.tk.bind("<FocusIn>", show_keyboard)

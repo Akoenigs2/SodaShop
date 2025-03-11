@@ -104,4 +104,4 @@ def home():
 
     editDrinkButton = PushButton(flavorsSettingsBox, text="Edit Selected Drink", align="right", command=drinkMenu.editDrink)
     createNewDrinkButton = PushButton(flavorsSettingsBox, text=parms.editDrinkText, align="right", command=createNewDrink)
-    dispenseButton = PushButton(parms.app, text="Select a Drink", width="fill", height="fill", command=flavorsOutSerial.send_values)
+    dispenseButton = PushButton(parms.app, text="Select a Drink", width="fill", height="fill", command=flavorsOutSerial.sendFlavorValues)

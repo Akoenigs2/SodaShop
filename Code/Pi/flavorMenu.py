@@ -64,6 +64,7 @@ def editFlavor(selection):
   currentFlavorIndex = {'value':0}
   flavorWindow = Window(parms.app, title="Swap Flavor")
   flavorWindow.show(wait=True)
+  flavorWindow.set_full_screen()
   settingsBox = Box(flavorWindow, width="fill", align="top")
   exitButton = PushButton(settingsBox, text="Back", command=closeWindow, align="left")
   saveButton = PushButton(settingsBox, text="Save", command=saveAndCloseWindow, align="right")
@@ -72,7 +73,7 @@ def editFlavor(selection):
   deleteButton = PushButton(settingsBox, text="Delete", align="left", command=deleteFlavor)
   deleteButton.hide()
   chooseFlavorList = ListBox(flavorWindow, items=parms.flavors, align="left", height="fill", command=chooseFlavor)
-  colorButton = PushButton(flavorWindow, width="fill", command=selectColor)
+  colorButton = PushButton(flavorWindow, text="Color", width="fill", command=selectColor)
   colorButton.hide()
 
   settings.saveSettings()
