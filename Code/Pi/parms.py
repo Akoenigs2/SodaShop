@@ -1,4 +1,5 @@
 from guizero import App
+import serial
 
 # Drink Class
 class Drink:
@@ -31,16 +32,14 @@ def init():
     global max_slider_width
     global drinkNames
     global invalidDrinkNames
-    global port
-    global baudrate
     global chosenFlavorsColors
     global flavorColors
+    global ser
 
     # Constant Variables
     editDrinkText = "Create New Drink"
     editFlavorText = "Create New Flavor"
-    port='/dev/ttyUSB0'
-    baudrate=9600
+    ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
     # Will have to modify when on PI:
     settingsFileName = "C:\git\SodaShop\Code\Pi\settings.txt" # Work PC: "C:\personal\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
     app = App() 
