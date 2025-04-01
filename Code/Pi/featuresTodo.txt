@@ -1,0 +1,10 @@
+Features to implement:
+  Favorite Drink List
+  Favorite Flavor List 
+  Default Flavors and Drinks
+  Reset all Drinks and Flavors to default
+  Copy Drink and Flavor 
+  Select drink size to ouput in one button push
+    ex: 16oz
+  Fix on screen keyboard
+  
