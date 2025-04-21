@@ -39,9 +39,8 @@ def init():
     # Constant Variables
     editDrinkText = "Create New Drink"
     editFlavorText = "Create New Flavor"
-    ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
     # Will have to modify when on PI:
-    settingsFileName = "C:\git\SodaShop\Code\Pi\settings.txt" # Work PC: "C:\personal\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
+    settingsFileName = "/home/nicwitulski/SeniorDesign/SodaShop/Code/Pi/settings.txt" # Work PC: "C:\personal\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
     app = App() 
     app.set_full_screen()
 

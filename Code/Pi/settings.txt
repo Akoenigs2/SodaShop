@@ -1,25 +1,18 @@
-Vodka,#dfdee3
-Coke,#804000
-Rum,#e0e0e0
-Sprite,#dbdac1
 None,#ffffff
-Cherry,#d96962
-Rum,#e0e0e0
-Pineapple,#e0dc58
-Sprite,#dbdac1
-Lemon,#fff93d
-Orange,#e3a41b
-Grape,#8000ff
-Blueberry,#3c02fa
-Vodka,#dfdee3
-Coke,#804000
-Simple Syrup,#c0c0c0
-Crown Royal,#804040
-Lime Juice,#00ff80
-,#ffffff
-Bitters,#804040
+None,#ffffff
+None,#ffffff
+None,#ffffff
+None,#ffffff
 Create New Drink
 Whiskey Sour,10,65,25,0,0,Simple Syrup,Crown Royal,Lime Juice,None
-Old Fasion,5,90,0,5,0,Simple Syrup,Crown Royal,Lime Juice,Bitters
-Vodka Sprite,0,0,40,60,0,None,None,Vodka,Sprite
-Rum and Coke,0,0,65,35,0,None,None,Coke,Rum
+P2 Water Test,0,0,0,100,0,Vodka,Coke,Rum,Sprite
+TestAll,13,12,12,13,50,Vodka,Coke,Rum,Mtn. Dew
+Syrups,29,22,24,25,0,Vodka,Coke,Rum,Mtn. Dew
+TestAll2,17,17,17,17,32,Vodka,Coke,Rum,Mtn. Dew
+Just Coke & Diet Coke,0,13,13,0,0,Water,Diet Coke,Coke,Mtn. Dew
+Mtn. Dew. ,0,0,0,51,49,Vodka,Coke,Rum,Mtn. Dew
+m,0,0,60,0,0,Water,Diet Coke,Coke,Mtn. Dew
+Syrup,21,28,26,25,0,Water,Diet Coke,Coke,Mtn. Dew
+Coke & Diet,0,22,22,0,30,Water,Diet Coke,Coke,Mtn. Dew
+Wat,0,0,0,0,100,Vodka,Coke,Rum,Mtn. Dew
+Rum,0,0,0,71,0,Water,Diet Coke,Coke,Mtn. Dew

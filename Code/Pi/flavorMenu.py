@@ -1,7 +1,20 @@
 import parms
 import settings
 import homeMenu
+import subprocess
+import os
 from guizero import Window, Box, PushButton, ListBox
+
+def show_keyboard(event=None):
+  env = os.environ.copy()
+  env["DISPLAY"] = ":0"
+  subprocess.Popen(["onboard"], env=env)
+
+def hide_keyboard(event=None):
+  subprocess.Popen(["pkill", "onboard"])
+
+def on_return(event=None):
+  hide_keyboard()
 
 # Edit Flavor Menu
 def editFlavor(selection):
@@ -36,7 +49,9 @@ def editFlavor(selection):
     flavorWindow.destroy()
 
   def createNewFlavor():
+    show_keyboard()
     flavorQuestion = flavorWindow.question("Flavor Edit", "Enter new flavor name")
+    hide_keyboard()
     if (not flavorQuestion in parms.flavors):
       parms.flavors.append(flavorQuestion)
       parms.flavorColors.append("#ffffff")
@@ -48,18 +63,29 @@ def editFlavor(selection):
     colorButton.show()
     colorButton.bg = parms.flavorColors[currentFlavorIndex['value']]
     saveButton.show()
-    deleteButton.show()
+    if (flavor == "None"):
+      deleteButton.hide()
+    else:
+      deleteButton.show()
 
   def selectColor():
     color = "None"
     color = flavorWindow.select_color(color=parms.flavorColors[currentFlavorIndex['value']])
+    if (color == None):
+      color = "#ffffff"
     parms.flavorColors[currentFlavorIndex['value']] = color
     colorButton.bg = color
   
   def deleteFlavor():
+    for i, val in enumerate(parms.chosenFlavors):
+      if (val == parms.flavors[currentFlavorIndex['value']]):
+        parms.chosenFlavors[i] = "None"
+        parms.chosenFlavorsColors[i] = "#ffffff"
+
     chooseFlavorList.remove(parms.flavors[currentFlavorIndex['value']])
     parms.flavors.pop(currentFlavorIndex['value'])
     parms.flavorColors.pop(currentFlavorIndex['value'])
+    chooseFlavor("None")
     
   currentFlavorIndex = {'value':0}
   flavorWindow = Window(parms.app, title="Swap Flavor")

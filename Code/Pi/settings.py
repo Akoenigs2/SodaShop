@@ -9,12 +9,16 @@ def loadSettings():
         drinkSelect = False
         for row in reader:
             if row:
-              if (i < 4):
+              if (row[0] == parms.editDrinkText):
+                drinkSelect = True
+                while (i < 4):
+                  parms.chosenFlavors[i] = "None"
+                  parms.chosenFlavorsColors[i] = "#ffffff"
+                  i += 1
+              elif (i < 4):
                 parms.chosenFlavors[i] = row[0]
                 parms.chosenFlavorsColors[i] = row[1]
                 i += 1
-              elif (row[0] == parms.editDrinkText):
-                drinkSelect = True
               elif (drinkSelect):
                 name = row[0]
                 flavor1Perc = int(row[1])

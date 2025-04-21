@@ -1,7 +1,21 @@
 import parms
 import settings
 import subprocess
+import os
+import time
+import threading
 from guizero import Slider, Combo, Window, PushButton, Box, Text, TextBox
+
+def show_keyboard(event=None):
+  env = os.environ.copy()
+  env["DISPLAY"] = ":0"
+  subprocess.Popen(["onboard"],env=env)
+
+def hide_keyboard(event=None):
+  subprocess.Popen(["pkill","onboard"])
+
+def on_return(event=None):
+  hide_keyboard()
 
 # Edit Selected Drink Menu
 def editDrink():
@@ -11,6 +25,7 @@ def editDrink():
 
   # When Exit Button Pressed, Close New Drink Window
   def closeWindow():
+    hide_keyboard()
     makeDrinkWindow.hide()
     makeDrinkWindow.destroy()
   
@@ -93,9 +108,6 @@ def editDrink():
     homeMenu.dispenseButton.text = "Select a Drink"
     closeWindow()
   
-  def show_keyboard(event):
-    subprocess.Popen(["onboard"])
-
   makeDrinkWindow = Window(parms.app, title="Create your drink")
   makeDrinkWindow.show(wait=True)
   makeDrinkWindow.set_full_screen()
@@ -146,7 +158,12 @@ def editDrink():
 
   updateSliders()
 
+  blur_zone = Box(makeDrinkWindow, width="fill", height="fill")
+  blur_zone.tk.bind("<Button-1>", lambda e: makeDrinkWindow.tk.focus())
+
   saveButton = PushButton(settingsBox, text="Save", align="right", command=saveDrink)
   deleteButton = PushButton(settingsBox, text="Delete", align="left", command=deleteDrink)
   nameText = TextBox(settingsBox, text=drink.name, align="top", width="fill")
   nameText.tk.bind("<FocusIn>", show_keyboard)
+  nameText.tk.bind("<FocusOut>", hide_keyboard)
+  nameText.tk.bind("<Return>", on_return)
