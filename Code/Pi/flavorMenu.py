@@ -17,31 +17,11 @@ def on_return(event=None):
   hide_keyboard()
 
 # Edit Flavor Menu
-def editFlavor(selection):
+def editFlavor():
   def saveAndCloseWindow():
-    import homeMenu
-    if (selection == "0"):
-      parms.chosenFlavors[0] = parms.flavors[currentFlavorIndex['value']]
-      parms.chosenFlavorsColors[0] = parms.flavorColors[currentFlavorIndex['value']]
-      homeMenu.flavor1Button.text = parms.flavors[currentFlavorIndex['value']]
-      homeMenu.flavor1Button.bg = parms.flavorColors[currentFlavorIndex['value']]
-    elif (selection == "1"):
-      parms.chosenFlavors[1] = parms.flavors[currentFlavorIndex['value']]
-      parms.chosenFlavorsColors[1] = parms.flavorColors[currentFlavorIndex['value']]
-      homeMenu.flavor2Button.text = parms.flavors[currentFlavorIndex['value']]
-      homeMenu.flavor2Button.bg = parms.flavorColors[currentFlavorIndex['value']]
-    elif (selection == "2"):
-      parms.chosenFlavors[2] = parms.flavors[currentFlavorIndex['value']]
-      parms.chosenFlavorsColors[2] = parms.flavorColors[currentFlavorIndex['value']]
-      homeMenu.flavor3Button.text = parms.flavors[currentFlavorIndex['value']]
-      homeMenu.flavor3Button.bg = parms.flavorColors[currentFlavorIndex['value']]
-    elif (selection == "3"):
-      parms.chosenFlavors[3] = parms.flavors[currentFlavorIndex['value']]
-      parms.chosenFlavorsColors[3] = parms.flavorColors[currentFlavorIndex['value']]
-      homeMenu.flavor4Button.text = parms.flavors[currentFlavorIndex['value']]
-      homeMenu.flavor4Button.bg = parms.flavorColors[currentFlavorIndex['value']]
     settings.saveSettings()
     homeMenu.updateDrinkNameLists()
+    homeMenu.updateFlavorColors()
     closeWindow()
 
   def closeWindow():
@@ -49,59 +29,70 @@ def editFlavor(selection):
     flavorWindow.destroy()
 
   def createNewFlavor():
-    # TODO: Uncomment when on Pi
-    # show_keyboard()
-    flavorQuestion = flavorWindow.question("Flavor Edit", "Enter new flavor name")
-    # TODO: Uncomment when on Pi
-    # hide_keyboard()
-    if (not flavorQuestion in parms.flavors):
-      parms.flavors.append(flavorQuestion)
-      parms.flavorColors.append("#ffffff")
-      chooseFlavorList.append(flavorQuestion)
-      settings.saveSettings()
-
-  def chooseFlavor(flavor):
-    parms.modify_value(currentFlavorIndex,parms.flavors.index(flavor))
-    colorButton.show()
-    colorButton.bg = parms.flavorColors[currentFlavorIndex['value']]
-    saveButton.show()
-    if (flavor == "None"):
-      deleteButton.hide()
+    if ("New Flavor" in flavorsList.items):
+      flavorsList.value = "New Flavor"
     else:
+      parms.flavors.append(parms.Flavor("New Flavor", "#ffffff"))
+      updateFlavorList()
+      flavorsList.value = "New Flavor"
+
+
+  def chooseFlavor(show):
+    colorButton.show()
+    colorButton.bg = next((flavor.color for flavor in parms.flavors if flavor.name == flavorsList.value), "#ffffff")
+    saveButton.show()
+    copyFlavorButton.show()
+    deleteButton.show()
+    if (show):
+      colorButton.show()
+      colorButton.bg = next((flavor.color for flavor in parms.flavors if flavor.name == flavorsList.value), "#ffffff")
+      saveButton.show()
+      copyFlavorButton.show()
       deleteButton.show()
+    else:
+      colorButton.hide()
+      saveButton.hide()
+      copyFlavorButton.hide()
+      deleteButton.hide()
 
   def selectColor():
     color = "None"
-    color = flavorWindow.select_color(color=parms.flavorColors[currentFlavorIndex['value']])
+    color = flavorWindow.select_color(color=next((flavor.color for flavor in parms.flavors if flavor.name == flavorsList.value), "#ffffff"))
     if (color == None):
       color = "#ffffff"
-    parms.flavorColors[currentFlavorIndex['value']] = color
+    for i, flavor in enumerate(parms.flavors):
+      if flavor.name == flavorsList.value:
+        parms.flavors[i].color = color
     colorButton.bg = color
   
-  def deleteFlavor():
-    for i, val in enumerate(parms.chosenFlavors):
-      if (val == parms.flavors[currentFlavorIndex['value']]):
-        parms.chosenFlavors[i] = "None"
-        parms.chosenFlavorsColors[i] = "#ffffff"
+  def copyFlavor():
+    selectedFlavor = parms.findFlavorFromName(flavorsList.value)
+    parms.flavors.append(selectedFlavor)
+    updateFlavorList()
 
-    chooseFlavorList.remove(parms.flavors[currentFlavorIndex['value']])
-    parms.flavors.pop(currentFlavorIndex['value'])
-    parms.flavorColors.pop(currentFlavorIndex['value'])
-    chooseFlavor("None")
-    
-  currentFlavorIndex = {'value':0}
-  flavorWindow = Window(parms.app, title="Swap Flavor")
+  def deleteFlavor():
+    for i, flavor in enumerate(parms.flavors):
+      if flavor.name == flavorsList.value:
+        del parms.flavors[i]
+        chooseFlavor(False)
+        break
+    updateFlavorList()
+  
+  def updateFlavorList():
+    flavorsList.clear()
+    for flavor in parms.flavors:
+      flavorsList.append(flavor.name)
+
+  flavorWindow = Window(parms.app, title="Edit Flavors")
   flavorWindow.show(wait=True)
   flavorWindow.set_full_screen()
   settingsBox = Box(flavorWindow, width="fill", align="top")
-  exitButton = PushButton(settingsBox, text="Back", command=closeWindow, align="left")
   saveButton = PushButton(settingsBox, text="Save", command=saveAndCloseWindow, align="right")
-  saveButton.hide()
-  newFlavorButton = PushButton(settingsBox, text="Create New Flavor", command=createNewFlavor, align="right")
+  newFlavorButton = PushButton(settingsBox, text="Create New Flavor", command=createNewFlavor, align="left")
   deleteButton = PushButton(settingsBox, text="Delete", align="left", command=deleteFlavor)
   deleteButton.hide()
-  chooseFlavorList = ListBox(flavorWindow, items=parms.flavors, align="left", height="fill", command=chooseFlavor)
+  copyFlavorButton = PushButton(settingsBox, text="Copy Selected Flavor", command=copyFlavor, align="left")
+  copyFlavorButton.hide()
+  flavorsList = ListBox(flavorWindow, items=[flavor.name for flavor in parms.flavors], align="left", height="fill", command=chooseFlavor)
   colorButton = PushButton(flavorWindow, text="Color", width="fill", command=selectColor)
   colorButton.hide()
-
-  settings.saveSettings()

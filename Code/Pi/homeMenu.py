@@ -3,7 +3,7 @@ import drinkMenu
 import flavorsOutSerial
 import flavorMenu
 import favoriteMenu
-from guizero import Box, ListBox, PushButton
+from guizero import Box, ListBox, PushButton, Combo
 
 # Select Drink Function
 def selectDrink(selection):
@@ -55,28 +55,51 @@ def clearLists():
   validDrinkList.clear()
   
 def updateDrinkNameLists():
-  parms.drinkNames.clear()
-  parms.invalidDrinkNames.clear()
+  parms.validDrinks.clear()
+  parms.invalidDrinks.clear()
   clearLists()
   for drink in parms.drinks:
       if ((drink.flavor1Perc > 0) and (not drink.flavor1Name in parms.chosenFlavors) and (not drink.flavor1Name == "None")):
-        parms.invalidDrinkNames.append(drink.name)
-        invalidDrinkList.append(drink.name)
+        parms.invalidDrinks.append(drink)
       elif ((drink.flavor2Perc > 0) and (not drink.flavor2Name in parms.chosenFlavors) and (not drink.flavor2Name == "None")):
-        parms.invalidDrinkNames.append(drink.name)
-        invalidDrinkList.append(drink.name)
+        parms.invalidDrinks.append(drink)
       elif ((drink.flavor3Perc > 0) and (not drink.flavor3Name in parms.chosenFlavors) and (not drink.flavor3Name == "None")):
-        parms.invalidDrinkNames.append(drink.name)
-        invalidDrinkList.append(drink.name)
+        parms.invalidDrinks.append(drink)
       elif ((drink.flavor4Perc > 0) and (not drink.flavor4Name in parms.chosenFlavors) and (not drink.flavor4Name == "None")):
-        parms.invalidDrinkNames.append(drink.name)
-        invalidDrinkList.append(drink.name)
+        parms.invalidDrinks.append(drink)
       else:
-        parms.drinkNames.append(drink.name)
-        validDrinkList.append(drink.name)
+        parms.validDrinks.append(drink)
+  validDrinkList.append(parms.getListOfValidDrinksNames())
+  invalidDrinkList.append(parms.getListOfInvalidDrinksNames())
 
-global favoriteDrinkButtons
-favoriteDrinkButtons = []
+def setFlavorColor1():
+  parms.chosenFlavors[0] = parms.findFlavorFromName(flavor1Button.value)
+  flavor1Button.bg = parms.chosenFlavors[0].color
+def setFlavorColor2():
+  parms.chosenFlavors[1] = parms.findFlavorFromName(flavor2Button.value)
+  flavor2Button.bg = parms.chosenFlavors[1].color
+def setFlavorColor3():
+  parms.chosenFlavors[2] = parms.findFlavorFromName(flavor3Button.value)
+  flavor3Button.bg = parms.chosenFlavors[2].color
+def setFlavorColor4():
+  parms.chosenFlavors[3] = parms.findFlavorFromName(flavor4Button.value)
+  flavor4Button.bg = parms.chosenFlavors[3].color
+
+def updateFlavorColors():
+  setFlavorColor1()
+  setFlavorColor2()
+  setFlavorColor3()
+  setFlavorColor4()
+
+def updateFlavorButtons():
+  flavor1Button.clear()
+  flavor2Button.clear()
+  flavor3Button.clear()
+  flavor4Button.clear()
+  flavor1Button.append(parms.getListofFlavorNames())
+  flavor2Button.append(parms.getListofFlavorNames())
+  flavor3Button.append(parms.getListofFlavorNames())
+  flavor4Button.append(parms.getListofFlavorNames())
 
 def home():
     # Make widgets global
@@ -87,30 +110,34 @@ def home():
     global flavor3Button
     global flavor4Button
     global dispenseButton
+    global favoriteDrinkButtons
 
     # Main menu logic
+    
     drinkListBox = Box(parms.app, height="fill", align="right")
-    validDrinkList = ListBox(drinkListBox, items=parms.drinkNames, height="fill", align="top", command=selectionValidDrink, scrollbar=True)
-    invalidDrinkList = ListBox(drinkListBox, items=parms.invalidDrinkNames, height="fill", align="bottom", command=selectInvalidDrink, scrollbar = True)
+    validDrinkList = ListBox(drinkListBox, items=parms.getListOfValidDrinksNames(), height="fill", align="top", command=selectionValidDrink, scrollbar=True)
+    invalidDrinkList = ListBox(drinkListBox, items=parms.getListOfInvalidDrinksNames(), height="fill", align="bottom", command=selectInvalidDrink, scrollbar = True)
     invalidDrinkList.bg = "#e0dcdc"
 
     updateDrinkNameLists()
 
     flavorsSettingsBox = Box(parms.app, width="fill", align="top", border=True)
-    flavor1Button = PushButton(flavorsSettingsBox, text=parms.chosenFlavors[0], align="left", command=flavorMenu.editFlavor, args="0")
-    flavor1Button.bg = parms.chosenFlavorsColors[0]
-    flavor2Button = PushButton(flavorsSettingsBox, text=parms.chosenFlavors[1], align="left", command=flavorMenu.editFlavor, args="1")
-    flavor2Button.bg = parms.chosenFlavorsColors[1]
-    flavor3Button = PushButton(flavorsSettingsBox, text=parms.chosenFlavors[2], align="left", command=flavorMenu.editFlavor, args="2")
-    flavor3Button.bg = parms.chosenFlavorsColors[2]
-    flavor4Button = PushButton(flavorsSettingsBox, text=parms.chosenFlavors[3], align="left", command=flavorMenu.editFlavor, args="3")
-    flavor4Button.bg = parms.chosenFlavorsColors[3]
+    flavor1Button = Combo(flavorsSettingsBox, options=parms.getListOfFlavorNames(), selected=parms.chosenFlavors[0].name, align="left", command=setFlavorColor1)
+    flavor1Button.bg = parms.chosenFlavors[0].color
+    flavor2Button = Combo(flavorsSettingsBox, options=parms.getListOfFlavorNames(), selected=parms.chosenFlavors[1].name, align="left", command=setFlavorColor2)
+    flavor2Button.bg = parms.chosenFlavors[1].color
+    flavor3Button = Combo(flavorsSettingsBox, options=parms.getListOfFlavorNames(), selected=parms.chosenFlavors[2].name, align="left", command=setFlavorColor3)
+    flavor3Button.bg = parms.chosenFlavors[2].color
+    flavor4Button = Combo(flavorsSettingsBox, options=parms.getListOfFlavorNames(), selected=parms.chosenFlavors[3].name, align="left", command=setFlavorColor4)
+    flavor4Button.bg = parms.chosenFlavors[3].color
 
+    editFlavors = PushButton(flavorsSettingsBox, text="Edit Flavors", align="right", command=flavorMenu.editFlavor)
     editFavoriteDrinks = PushButton(flavorsSettingsBox, text="Edit Favorite Drinks", align="right", command=favoriteMenu.editFavorites)
     editDrinkButton = PushButton(flavorsSettingsBox, text="Edit Selected Drink", align="right", command=drinkMenu.editDrink)
-    createNewDrinkButton = PushButton(flavorsSettingsBox, text=parms.editDrinkText, align="right", command=createNewDrink)
+    createNewDrinkButton = PushButton(flavorsSettingsBox, text="Create New Drink", align="right", command=createNewDrink)
     
-    for i in range(parms.numFavoriteDrinks):
+    favoriteDrinkButtons = []
+    for i in range(len(parms.favoriteDrinks)):
       favoriteButton = PushButton(parms.app, text=parms.favoriteDrinks[i].name, width="fill", height="fill", command=flavorsOutSerial.sendFlavorValues, args=str(i))
       favoriteButton.bg = parms.favoriteDrinks[i].color
       favoriteDrinkButtons.append(favoriteButton)
