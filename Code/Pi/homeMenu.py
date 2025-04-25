@@ -2,6 +2,7 @@ import parms
 import drinkMenu
 import flavorsOutSerial
 import flavorMenu
+import favoriteMenu
 from guizero import Box, ListBox, PushButton
 
 # Select Drink Function
@@ -74,6 +75,9 @@ def updateDrinkNameLists():
         parms.drinkNames.append(drink.name)
         validDrinkList.append(drink.name)
 
+global favoriteDrinkButtons
+favoriteDrinkButtons = []
+
 def home():
     # Make widgets global
     global validDrinkList
@@ -102,6 +106,13 @@ def home():
     flavor4Button = PushButton(flavorsSettingsBox, text=parms.chosenFlavors[3], align="left", command=flavorMenu.editFlavor, args="3")
     flavor4Button.bg = parms.chosenFlavorsColors[3]
 
+    editFavoriteDrinks = PushButton(flavorsSettingsBox, text="Edit Favorite Drinks", align="right", command=favoriteMenu.editFavorites)
     editDrinkButton = PushButton(flavorsSettingsBox, text="Edit Selected Drink", align="right", command=drinkMenu.editDrink)
     createNewDrinkButton = PushButton(flavorsSettingsBox, text=parms.editDrinkText, align="right", command=createNewDrink)
-    dispenseButton = PushButton(parms.app, text="Select a Drink", width="fill", height="fill", command=flavorsOutSerial.sendFlavorValues)
+    
+    for i in range(parms.numFavoriteDrinks):
+      favoriteButton = PushButton(parms.app, text=parms.favoriteDrinks[i].name, width="fill", height="fill", command=flavorsOutSerial.sendFlavorValues, args=str(i))
+      favoriteButton.bg = parms.favoriteDrinks[i].color
+      favoriteDrinkButtons.append(favoriteButton)
+
+    dispenseButton = PushButton(parms.app, text="Select a Drink", width="fill", height="fill", command=flavorsOutSerial.sendFlavorValues, args="custom")

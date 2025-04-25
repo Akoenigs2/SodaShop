@@ -6,6 +6,7 @@ def loadSettings():
     with open(parms.settingsFileName, "r") as settingsContent:
         reader = csv.reader(settingsContent)
         i = 0
+        j = 0
         drinkSelect = False
         for row in reader:
             if row:
@@ -30,7 +31,13 @@ def loadSettings():
                 flavor2String = row[7]
                 flavor3String = row[8]
                 flavor4String = row[9]
-                parms.drinks.append(parms.Drink(name, flavor1Perc, flavor2Perc, flavor3Perc, flavor4Perc, carbPerc, flavor1String, flavor2String, flavor3String, flavor4String))
+                color = row[10]
+                loadedDrink = parms.Drink(name, flavor1Perc, flavor2Perc, flavor3Perc, flavor4Perc, carbPerc, flavor1String, flavor2String, flavor3String, flavor4String, color)
+                if (j < parms.numFavoriteDrinks):
+                  parms.favoriteDrinks.append(loadedDrink)
+                  j += 1
+                else:
+                  parms.drinks.append(loadedDrink)
               else:
                   parms.flavors.append(row[0])
                   parms.flavorColors.append(row[1])
@@ -49,6 +56,10 @@ def saveSettings():
     
     writer.writerow([parms.editDrinkText])
 
+    for favoriteDrink in parms.favoriteDrinks:
+       writer.writerow([favoriteDrink.name, favoriteDrink.flavor1Perc, favoriteDrink.flavor2Perc, favoriteDrink.flavor3Perc, favoriteDrink.flavor4Perc, favoriteDrink.carbPerc, 
+                       favoriteDrink.flavor1Name, favoriteDrink.flavor2Name, favoriteDrink.flavor3Name, favoriteDrink.flavor4Name, favoriteDrink.color])
+
     for drink in parms.drinks:
       writer.writerow([drink.name, drink.flavor1Perc, drink.flavor2Perc, drink.flavor3Perc, drink.flavor4Perc, drink.carbPerc, 
-                       drink.flavor1Name, drink.flavor2Name, drink.flavor3Name, drink.flavor4Name])
+                       drink.flavor1Name, drink.flavor2Name, drink.flavor3Name, drink.flavor4Name, drink.color])

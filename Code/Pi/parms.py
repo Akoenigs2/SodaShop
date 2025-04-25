@@ -3,7 +3,7 @@ import serial
 
 # Drink Class
 class Drink:
-  def __init__(self, name, flavor1Perc, flavor2Perc, flavor3Perc, flavor4Perc, carbPerc, flavor1Name, flavor2Name, flavor3Name, flavor4Name):
+  def __init__(self, name, flavor1Perc, flavor2Perc, flavor3Perc, flavor4Perc, carbPerc, flavor1Name, flavor2Name, flavor3Name, flavor4Name, color):
     self.name = name
     self.flavor1Perc = flavor1Perc
     self.flavor2Perc = flavor2Perc
@@ -14,6 +14,7 @@ class Drink:
     self.flavor2Name = flavor2Name
     self.flavor3Name = flavor3Name
     self.flavor4Name = flavor4Name
+    self.color = color
   def __repr__(self):
     return f"Drink({self.name}, {self.flavor1Perc}, {self.flavor2Perc}, {self.flavor3Perc}, {self.flavor4Perc}, {self.carbPerc})"
 
@@ -35,12 +36,14 @@ def init():
     global chosenFlavorsColors
     global flavorColors
     global ser
+    global numFavoriteDrinks
+    global favoriteDrinks
 
     # Constant Variables
     editDrinkText = "Create New Drink"
     editFlavorText = "Create New Flavor"
     # Will have to modify when on PI:
-    settingsFileName = "/home/nicwitulski/SeniorDesign/SodaShop/Code/Pi/settings.txt" # Work PC: "C:\personal\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
+    settingsFileName = "C:\git\SodaShop\Code\Pi\settings.txt" # Work PC: "C:\personal\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
     app = App() 
     app.set_full_screen()
 
@@ -50,12 +53,14 @@ def init():
     drinks = []
     flavors = []
     flavorColors = []
-    currentDrink = {'value':Drink("currentDrink",0,0,0,0,0, "temp", "temp", "temp", "temp")}
+    currentDrink = {'value':Drink("currentDrink",0,0,0,0,0, "temp", "temp", "temp", "temp", "#ffffff")}
     newDrinkFlag = {'value':False}
     validDrinkSelection = {'value':True}
     max_slider_width = 400
     drinkNames = []
     invalidDrinkNames = []
+    favoriteDrinks = []
+    numFavoriteDrinks = 5
 
 # To edit values such as currentDrink
 def modify_value(data_dict, newValue):

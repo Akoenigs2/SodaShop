@@ -21,11 +21,12 @@ def on_return(event=None):
 def editDrink():
   drink = parms.currentDrink['value']
   if (parms.newDrinkFlag['value']):
-    drink = parms.Drink("Enter Drink Name", 0, 0, 0, 0, 0, parms.chosenFlavors[0], parms.chosenFlavors[1], parms.chosenFlavors[2], parms.chosenFlavors[3])
+    drink = parms.Drink("Enter Drink Name", 0, 0, 0, 0, 0, parms.chosenFlavors[0], parms.chosenFlavors[1], parms.chosenFlavors[2], parms.chosenFlavors[3], "#ffffff")
 
   # When Exit Button Pressed, Close New Drink Window
   def closeWindow():
-    hide_keyboard()
+    # TODO: Uncomment when on Pi
+    # hide_keyboard()
     makeDrinkWindow.hide()
     makeDrinkWindow.destroy()
   
@@ -52,7 +53,7 @@ def editDrink():
     import homeMenu
     homeMenu.dispenseButton.text = "Select a Drink"
     newDrink = parms.Drink(nameText.value, flavor1Slider.value, flavor2Slider.value, flavor3Slider.value, flavor4Slider.value, carbSlider.value, 
-                     flavor1Label.value, flavor2Label.value, flavor3Label.value, flavor4Label.value)
+                     flavor1Label.value, flavor2Label.value, flavor3Label.value, flavor4Label.value, colorButton.bg)
     parms.drinks.append(newDrink)
 
     if ((newDrink.flavor1Perc > 0) and (not newDrink.flavor1Name in parms.chosenFlavors) and (not newDrink.flavor1Name == "None")):
@@ -79,6 +80,10 @@ def editDrink():
       else:
         homeMenu.invalidDrinkList.remove(drink.name)
         parms.invalidDrinkNames.remove(drink.name)
+
+    for i in range(parms.numFavoriteDrinks):
+      if (newDrink.name == homeMenu.favoriteDrinkButtons[i].name):
+        homeMenu.favoriteDrinkButtons[i].bg = newDrink.color
 
     parms.modify_value(parms.newDrinkFlag, False)
     settings.saveSettings()
@@ -108,12 +113,21 @@ def editDrink():
     homeMenu.dispenseButton.text = "Select a Drink"
     closeWindow()
   
+  def changeColor():
+    color = "None"
+    color = makeDrinkWindow.select_color(color=drink.color)
+    if (color == None):
+      color = "#ffffff"
+    colorButton.bg = color
+
   makeDrinkWindow = Window(parms.app, title="Create your drink")
   makeDrinkWindow.show(wait=True)
   makeDrinkWindow.set_full_screen()
   settingsBox = Box(makeDrinkWindow, width="fill", align="top")
 
   exitButton = PushButton(settingsBox, text="Back", command=closeWindow, align="left")
+
+  colorButton = PushButton(makeDrinkWindow, text="Color", command=changeColor, width="fill", align="tops")
 
   flavorEditterBox = Box(makeDrinkWindow, layout="grid", align="left")
 
@@ -164,6 +178,8 @@ def editDrink():
   saveButton = PushButton(settingsBox, text="Save", align="right", command=saveDrink)
   deleteButton = PushButton(settingsBox, text="Delete", align="left", command=deleteDrink)
   nameText = TextBox(settingsBox, text=drink.name, align="top", width="fill")
-  nameText.tk.bind("<FocusIn>", show_keyboard)
-  nameText.tk.bind("<FocusOut>", hide_keyboard)
-  nameText.tk.bind("<Return>", on_return)
+
+  # TODO: Uncomment when on Pi
+  # nameText.tk.bind("<FocusIn>", show_keyboard)
+  # nameText.tk.bind("<FocusOut>", hide_keyboard)
+  # nameText.tk.bind("<Return>", on_return)

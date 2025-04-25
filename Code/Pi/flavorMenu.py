@@ -49,9 +49,11 @@ def editFlavor(selection):
     flavorWindow.destroy()
 
   def createNewFlavor():
-    show_keyboard()
+    # TODO: Uncomment when on Pi
+    # show_keyboard()
     flavorQuestion = flavorWindow.question("Flavor Edit", "Enter new flavor name")
-    hide_keyboard()
+    # TODO: Uncomment when on Pi
+    # hide_keyboard()
     if (not flavorQuestion in parms.flavors):
       parms.flavors.append(flavorQuestion)
       parms.flavorColors.append("#ffffff")

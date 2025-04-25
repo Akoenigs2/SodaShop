@@ -1,18 +1,27 @@
 None,#ffffff
+Diet Coke,#ffffff
+Coke,#ffffff
+Test,#ffffff
 None,#ffffff
-None,#ffffff
-None,#ffffff
-None,#ffffff
+Test,#ffffff
+Diet Coke,#ffffff
+Coke,#ffffff
 Create New Drink
-Whiskey Sour,10,65,25,0,0,Simple Syrup,Crown Royal,Lime Juice,None
-P2 Water Test,0,0,0,100,0,Vodka,Coke,Rum,Sprite
-TestAll,13,12,12,13,50,Vodka,Coke,Rum,Mtn. Dew
-Syrups,29,22,24,25,0,Vodka,Coke,Rum,Mtn. Dew
-TestAll2,17,17,17,17,32,Vodka,Coke,Rum,Mtn. Dew
-Just Coke & Diet Coke,0,13,13,0,0,Water,Diet Coke,Coke,Mtn. Dew
-Mtn. Dew. ,0,0,0,51,49,Vodka,Coke,Rum,Mtn. Dew
-m,0,0,60,0,0,Water,Diet Coke,Coke,Mtn. Dew
-Syrup,21,28,26,25,0,Water,Diet Coke,Coke,Mtn. Dew
-Coke & Diet,0,22,22,0,30,Water,Diet Coke,Coke,Mtn. Dew
-Wat,0,0,0,0,100,Vodka,Coke,Rum,Mtn. Dew
-Rum,0,0,0,71,0,Water,Diet Coke,Coke,Mtn. Dew
+Coke & Diet,0,22,22,0,30,Water,Diet Coke,Coke,Mtn. Dew,#ffffff
+Rum,0,0,0,71,0,Water,Diet Coke,Coke,Mtn. Dew,#ffffff
+Whiskey Sour,10,65,25,0,0,Simple Syrup,Crown Royal,Lime Juice,None,#ffffff
+Syrups,29,22,24,25,0,Vodka,Coke,Rum,Mtn. Dew,#ffffff
+P2 Water Test,0,0,0,100,0,Vodka,Coke,Rum,Sprite,#ffffff
+Whiskey Sour,10,65,25,0,0,Simple Syrup,Crown Royal,Lime Juice,None,#ffffff
+P2 Water Test,0,0,0,100,0,Vodka,Coke,Rum,Sprite,#ffffff
+TestAll,13,12,12,13,50,Vodka,Coke,Rum,Mtn. Dew,#ffffff
+Syrups,29,22,24,25,0,Vodka,Coke,Rum,Mtn. Dew,#ffffff
+TestAll2,17,17,17,17,32,Vodka,Coke,Rum,Mtn. Dew,#ffffff
+Just Coke & Diet Coke,0,13,13,0,0,Water,Diet Coke,Coke,Mtn. Dew,#ffffff
+Mtn. Dew. ,0,0,0,51,49,Vodka,Coke,Rum,Mtn. Dew,#ffffff
+m,0,0,60,0,0,Water,Diet Coke,Coke,Mtn. Dew,#ffffff
+Syrup,21,28,26,25,0,Water,Diet Coke,Coke,Mtn. Dew,#ffffff
+Rum,0,0,0,71,0,Water,Diet Coke,Coke,Mtn. Dew,#ffffff
+WTest,0,0,0,0,100,None,None,None,None,#ffffff
+Enter Drink Name,0,28,0,0,0,None,Diet Coke,Coke,Test,#ffffff
+Coke & Diet,0,22,22,0,30,None,Diet Coke,Coke,None,#800040
