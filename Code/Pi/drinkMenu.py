@@ -26,7 +26,7 @@ def editDrink():
   # When Exit Button Pressed, Close New Drink Window
   def closeWindow():
     # TODO: Uncomment when on Pi
-    # hide_keyboard()
+    hide_keyboard()
     makeDrinkWindow.hide()
     makeDrinkWindow.destroy()
   
@@ -177,6 +177,6 @@ def editDrink():
   nameText = TextBox(settingsBox, text=drink.name, align="top", width="fill")
 
   # TODO: Uncomment when on Pi
-  # nameText.tk.bind("<FocusIn>", show_keyboard)
-  # nameText.tk.bind("<FocusOut>", hide_keyboard)
-  # nameText.tk.bind("<Return>", on_return)
+  nameText.tk.bind("<FocusIn>", show_keyboard)
+  nameText.tk.bind("<FocusOut>", hide_keyboard)
+  nameText.tk.bind("<Return>", on_return)

@@ -92,9 +92,9 @@ def editFlavor():
   nameText = TextBox(settingsBox, text=currentFlavor, align="top", width="fill")
 
   # TODO: Uncomment when on Pi
-  # nameText.tk.bind("<FocusIn>", show_keyboard)
-  # nameText.tk.bind("<FocusOut>", hide_keyboard)
-  # nameText.tk.bind("<Return>", on_return)
+  nameText.tk.bind("<FocusIn>", show_keyboard)
+  nameText.tk.bind("<FocusOut>", hide_keyboard)
+  nameText.tk.bind("<Return>", on_return)
 
   def show_keyboard(event=None):
     env = os.environ.copy()
