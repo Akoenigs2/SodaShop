@@ -45,6 +45,12 @@ def getListOfFlavorNames():
     list.append(flavor.name)
   return list
 
+def getListOfFavoriteNames():
+   list = []
+   for favorite in favoriteDrinks:
+      list.append(favorite.name)
+   return list
+
 def getListOfValidDrinksNames():
    list = []
    for validDrink in validDrinks:
@@ -83,7 +89,7 @@ def init():
     favoritDrinksIndicator = "Favorite Drinks"
     allDrinksIndicator = "All Drinks"
     # Will have to modify when on PI:
-    settingsFileName = "G:\seniorDesign\SodaShop\Code\Pi\settings.txt" # Work PC: "G:\seniorDesign\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
+    settingsFileName = "C:\git\SodaShop\Code\Pi\settings.txt" # Work PC: "G:\seniorDesign\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
     app = App() 
     app.set_full_screen()
 

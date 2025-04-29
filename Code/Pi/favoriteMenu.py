@@ -10,14 +10,18 @@ def editFavorites():
 
   def saveAndCloseWindow():
     import homeMenu
-    for i in range(parms.numFavoriteDrinks):
-      homeMenu.favoriteDrinkButtons[i].text = favoriteDrinkButtons[i].text
+    for i in range(len(parms.favoriteDrinks)):
+      for j in range(len(parms.drinks)):
+        if favoriteDrinkButtons[i].text == parms.drinks[j].name:
+          parms.favoriteDrinks[i] = parms.drinks[j]
+
+    homeMenu.updateFavoriteButtons()
     closeWindow()
 
   def selectFavoriteDrink(selection):
     parms.modify_value(selectedDrink, int(selection))
-    for i in range(parms.numFavoriteDrinks):
-      favoriteDrinkButtons[i].bg = "#ffffff"
+    for i in range(len(parms.favoriteDrinks)):
+      favoriteDrinkButtons[i].bg = parms.favoriteDrinks[i].color
     favoriteDrinkButtons[selectedDrink['value']].bg = "#e0dcdc"
 
   def chooseDrink(selection):
@@ -34,8 +38,9 @@ def editFavorites():
   saveButton.hide()
 
   selectedDrink = {'value':0}
-  drinkList = ListBox(favoriteEditWindow, items=parms.drinkNames, align="right", height="fill", command=chooseDrink, scrollbar=True)
+  drinkList = ListBox(favoriteEditWindow, items=parms.getListOfDrinkNames(), align="right", height="fill", command=chooseDrink, scrollbar=True)
   favoriteDrinkButtons = []
-  for i in range(parms.numFavoriteDrinks):
+  for i in range(len(parms.favoriteDrinks)):
     favoriteButton = PushButton(favoriteEditWindow, text=parms.favoriteDrinks[i].name, width="fill", height="fill", command=selectFavoriteDrink, args=str(i))
+    favoriteButton.bg = parms.favoriteDrinks[i].color
     favoriteDrinkButtons.append(favoriteButton)

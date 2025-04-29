@@ -56,35 +56,19 @@ def editDrink():
                      flavor1Label.value, flavor2Label.value, flavor3Label.value, flavor4Label.value, colorButton.bg)
     parms.drinks.append(newDrink)
 
-    if ((newDrink.flavor1Perc > 0) and (not newDrink.flavor1Name in parms.chosenFlavors) and (not newDrink.flavor1Name == "None")):
-      parms.invalidDrinkNames.append(newDrink.name)
-      homeMenu.invalidDrinkList.append(newDrink.name)
-    elif ((newDrink.flavor2Perc > 0) and (not newDrink.flavor2Name in parms.chosenFlavors) and (not newDrink.flavor2Name == "None")):
-      parms.invalidDrinkNames.append(newDrink.name)
-      homeMenu.invalidDrinkList.append(newDrink.name)
-    elif ((newDrink.flavor3Perc > 0) and (not newDrink.flavor3Name in parms.chosenFlavors) and (not newDrink.flavor3Name == "None")):
-      parms.invalidDrinkNames.append(newDrink.name)
-      homeMenu.invalidDrinkList.append(newDrink.name)
-    elif ((newDrink.flavor4Perc > 0) and (not newDrink.flavor4Name in parms.chosenFlavors) and (not newDrink.flavor4Name == "None")):
-      parms.invalidDrinkNames.append(newDrink.name)
-      homeMenu.invalidDrinkList.append(newDrink.name)
-    else:
-      parms.drinkNames.append(newDrink.name)
-      homeMenu.validDrinkList.append(newDrink.name)
-
     if (not parms.newDrinkFlag['value']):
       parms.drinks.remove(drink)
       if (parms.validDrinkSelection['value']):
         homeMenu.validDrinkList.remove(drink.name)
-        parms.drinkNames.remove(drink.name)
       else:
         homeMenu.invalidDrinkList.remove(drink.name)
-        parms.invalidDrinkNames.remove(drink.name)
+      if drink.name in parms.getListOfFavoriteNames():
+        for i in range(len(parms.favoriteDrinks)):
+          if parms.favoriteDrinks[i].name == drink.name:
+            parms.favoriteDrinks[i] = newDrink
 
-    for i in range(parms.numFavoriteDrinks):
-      if (newDrink.name == homeMenu.favoriteDrinkButtons[i].name):
-        homeMenu.favoriteDrinkButtons[i].bg = newDrink.color
-
+    homeMenu.updateFavoriteButtons()
+    homeMenu.updateDrinkNameLists()
     parms.modify_value(parms.newDrinkFlag, False)
     settings.saveSettings()
     closeWindow()
@@ -120,6 +104,19 @@ def editDrink():
       color = "#ffffff"
     colorButton.bg = color
 
+  def selectFlavorCombo1():
+    flavor1Label.bg = parms.findFlavorFromName(flavor1Label.value).color
+    updateSliders()
+  def selectFlavorCombo2():
+    flavor2Label.bg = parms.findFlavorFromName(flavor2Label.value).color
+    updateSliders()
+  def selectFlavorCombo3():
+    flavor3Label.bg = parms.findFlavorFromName(flavor3Label.value).color
+    updateSliders()
+  def selectFlavorCombo4():
+    flavor4Label.bg = parms.findFlavorFromName(flavor4Label.value).color
+    updateSliders()
+
   makeDrinkWindow = Window(parms.app, title="Create your drink")
   makeDrinkWindow.show(wait=True)
   makeDrinkWindow.set_full_screen()
@@ -127,7 +124,7 @@ def editDrink():
 
   exitButton = PushButton(settingsBox, text="Back", command=closeWindow, align="left")
 
-  colorButton = PushButton(makeDrinkWindow, text="Color", command=changeColor, width="fill", align="tops")
+  colorButton = PushButton(makeDrinkWindow, text="Color", command=changeColor, width="fill", align="top")
 
   flavorEditterBox = Box(makeDrinkWindow, layout="grid", align="left")
 
@@ -138,28 +135,28 @@ def editDrink():
     displayedFlavors.append(parms.chosenFlavors[2])
     displayedFlavors.append(parms.chosenFlavors[3])
   else:
-    displayedFlavors.append(drink.flavor1Name)
-    displayedFlavors.append(drink.flavor2Name)
-    displayedFlavors.append(drink.flavor3Name)
-    displayedFlavors.append(drink.flavor4Name)
+    displayedFlavors.append(parms.findFlavorFromName(drink.flavor1Name)) 
+    displayedFlavors.append(parms.findFlavorFromName(drink.flavor2Name)) 
+    displayedFlavors.append(parms.findFlavorFromName(drink.flavor3Name)) 
+    displayedFlavors.append(parms.findFlavorFromName(drink.flavor4Name)) 
 
-  flavor1Label = Combo(flavorEditterBox, grid=[0,0], options=parms.flavors, command=updateSliders)
-  flavor1Label.value = displayedFlavors[0]
+  flavor1Label = Combo(flavorEditterBox, grid=[0,0], options=parms.getListOfFlavorNames(), command=selectFlavorCombo1)
+  flavor1Label.value = displayedFlavors[0].name
   flavor1Slider = Slider(flavorEditterBox, grid=[1,0], command=editSliderConstraints, align="left", height="20")
   flavor1Slider.value = drink.flavor1Perc
   
-  flavor2Label = Combo(flavorEditterBox, options=parms.flavors, grid=[0,1], command=updateSliders)
-  flavor2Label.value = displayedFlavors[1]
+  flavor2Label = Combo(flavorEditterBox, options=parms.getListOfFlavorNames(), grid=[0,1], command=selectFlavorCombo2)
+  flavor2Label.value = displayedFlavors[1].name
   flavor2Slider = Slider(flavorEditterBox, grid=[1, 1], command=editSliderConstraints, align="left", height="20")
   flavor2Slider.value = drink.flavor2Perc
   
-  flavor3Label = Combo(flavorEditterBox, options=parms.flavors, grid=[0,2], command=updateSliders)
-  flavor3Label.value = displayedFlavors[2]
+  flavor3Label = Combo(flavorEditterBox, options=parms.getListOfFlavorNames(), grid=[0,2], command=selectFlavorCombo3)
+  flavor3Label.value = displayedFlavors[2].name
   flavor3Slider = Slider(flavorEditterBox, grid=[1,2], command=editSliderConstraints, align="left", height="20")
   flavor3Slider.value = drink.flavor3Perc
   
-  flavor4Label = Combo(flavorEditterBox, options=parms.flavors, grid=[0,3], command=updateSliders)
-  flavor4Label.value = displayedFlavors[3]
+  flavor4Label = Combo(flavorEditterBox, options=parms.getListOfFlavorNames(), grid=[0,3], command=selectFlavorCombo4)
+  flavor4Label.value = displayedFlavors[3].name
   flavor4Slider = Slider(flavorEditterBox, grid=[1,3], command=editSliderConstraints, align="left", height="20")
   flavor4Slider.value = drink.flavor4Perc
   
