@@ -1,7 +1,7 @@
 Chosen Flavors
-Root Beer,#764949
+None,#ffffff
 Pepsi Zero,#7b5144
-Starry Zero,#defc83
+Root Beer,#764949
 Lemon Lime,#80ff80
 All Flavors
 None,#ffffff
