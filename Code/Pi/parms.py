@@ -51,6 +51,12 @@ def getListOfFavoriteNames():
       list.append(favorite.name)
    return list
 
+def getListOfChosenFlavorNames():
+   list = []
+   for chosen in chosenFlavors:
+      list.append(chosen.name)
+   return list
+
 def getListOfValidDrinksNames():
    list = []
    for validDrink in validDrinks:

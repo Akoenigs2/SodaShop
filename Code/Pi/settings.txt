@@ -1,27 +1,29 @@
 Chosen Flavors
-Cola,#ff0080
-Starry Zero,#00ff80
-Mtn. Dew Zero,#00ff00
-Root Beer,#804040
+Root Beer,#764949
+Pepsi Zero,#7b5144
+Starry Zero,#defc83
+Lemon Lime,#80ff80
 All Flavors
 None,#ffffff
-Starry Zero,#00ff80
-Mtn. Dew Zero,#00ff00
-Cola,#800040
-Root Beer,#804040
-Dr Pete,#400000
-Lemon Lime,#00ff00
+Cola,#804040
+Root Beer,#764949
+Dr Pete,#800000
+Lemon Lime,#80ff80
+Pepsi Zero,#7b5144
+Starry Zero,#defc83
+Mtn. Dew Zero,#04fb29
 Favorite Drinks
-Pepsi Zero,20,0,0,0,20,Pepsi Zero,None,None,None,#ffffff
-Starry Zero,20,0,0,0,20,Starry Zero,None,None,None,#ffffff
-Mtn. Dew Zero,20,0,0,0,20,Mtn. Dew Zero,None,None,None,#ffffff
-Lemon Lime,20,0,0,0,20,Lemon Lime,None,None,None,#ff80ff
-Root Beer,20,0,0,0,20,Root Beer,None,None,None,#ffffff
+Pepsi Zero,20,0,0,0,20,Pepsi Zero,None,None,None,#804040
+Starry Zero,20,0,0,0,20,Starry Zero,None,None,None,#13ec80
+Mtn. Dew Zero,20,0,0,0,20,Mtn. Dew Zero,None,None,None,#47e61a
+Lemon Lime,20,0,0,0,20,Lemon Lime,None,None,None,#80ff80
+Root Beer,20,0,0,0,20,Root Beer,None,None,None,#783d07
 All Drinks
-Pepsi Zero,20,0,0,0,20,Pepsi Zero,None,None,None,#ffffff
-Starry Zero,20,0,0,0,20,Starry Zero,None,None,None,#ffffff
-Mtn. Dew Zero,20,0,0,0,20,Mtn. Dew Zero,None,None,None,#ffffff
-Root Beer,20,0,0,0,20,Root Beer,None,None,None,#ffffff
-Dr Pete,20,0,0,0,20,Dr Pete,None,None,None,#ffffff
-Lemon Lime,20,0,0,0,20,Cola,None,None,None,#0080ff
-Lemon Lime,20,0,0,0,20,Lemon Lime,None,None,None,#ff80ff
+Pepsi Zero,20,0,0,0,20,Pepsi Zero,None,None,None,#804040
+Mtn. Dew Zero,20,0,0,0,20,Mtn. Dew Zero,None,None,None,#47e61a
+Starry Zero,20,0,0,0,20,Starry Zero,None,None,None,#13ec80
+Root Beer,20,0,0,0,20,Root Beer,None,None,None,#783d07
+Dr Pete,20,0,0,0,20,Dr Pete,None,None,None,#895136
+Cola,20,0,0,0,20,Cola,None,None,None,#804040
+Lemon Lime,20,0,0,0,20,Lemon Lime,None,None,None,#80ff80
+Suicide,5,5,5,5,20,Root Beer,Pepsi Zero,Starry Zero,Lemon Lime,#804000

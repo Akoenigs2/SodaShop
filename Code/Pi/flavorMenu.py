@@ -7,9 +7,22 @@ from guizero import Window, Box, PushButton, ListBox, TextBox
 
 # Edit Flavor Menu
 def editFlavor():
+  
+  def show_keyboard(event=None):
+    env = os.environ.copy()
+    env["DISPLAY"] = ":0"
+    subprocess.Popen(["onboard"],env=env)
+
+  def hide_keyboard(event=None):
+    subprocess.Popen(["pkill","onboard"])
+
+  def on_return(event=None):
+    hide_keyboard()
+
   def saveAndCloseWindow():
     settings.saveSettings()
     homeMenu.updateDrinkNameLists()
+    homeMenu.updateFlavorButtons()
     closeWindow()
 
   def closeWindow():
@@ -17,12 +30,13 @@ def editFlavor():
     flavorWindow.destroy()
 
   def createNewFlavor():
-    if ("New Flavor" in flavorsList.items):
-      flavorsList.value = "New Flavor"
-    else:
-      parms.flavors.append(parms.Flavor("New Flavor", "#ffffff"))
-      updateFlavorList()
-      flavorsList.value = "New Flavor"
+    #show_keyboard()
+    flavorQuestion = flavorWindow.question("Flavor Edit", "Enter new flavor name")
+    #hide_keyboard()
+    if (not flavorQuestion in parms.flavors):
+      parms.flavors.append(parms.Flavor(flavorQuestion, "#ffffff"))
+      flavorsList.append(flavorQuestion)
+      settings.saveSettings()
 
   def selectFlavor(selection):
     currentFlavor = selection
@@ -61,12 +75,12 @@ def editFlavor():
 
   def deleteFlavor():
     for i, flavor in enumerate(parms.flavors):
-      if flavor.name == flavorsList.value:
-        del parms.flavors[i]
+      if parms.flavors[i].name == flavorsList.value:
+        parms.flavors.pop(i)
         chooseFlavor(False)
         break
     for i, chosenFlavor in enumerate(parms.chosenFlavors):
-      if chosenFlavor.name == flavorsList.value:
+      if parms.chosenFlavors[i].name == flavorsList.value:
         parms.chosenFlavors[i] = parms.Flavor("None", "#ffffff")
     updateFlavorList()
   
@@ -89,24 +103,3 @@ def editFlavor():
   colorButton = PushButton(flavorWindow, text="Color", width="fill", command=selectColor)
   colorButton.hide()
   currentFlavor = "None"
-  nameText = TextBox(settingsBox, text=currentFlavor, align="top", width="fill")
-
-  # TODO: Uncomment when on Pi
-  nameText.tk.bind("<FocusIn>", show_keyboard)
-  nameText.tk.bind("<FocusOut>", hide_keyboard)
-  nameText.tk.bind("<Return>", on_return)
-
-  def show_keyboard(event=None):
-    env = os.environ.copy()
-    env["DISPLAY"] = ":0"
-    subprocess.Popen(["onboard"],env=env)
-
-  def hide_keyboard(event=None):
-    subprocess.Popen(["pkill","onboard"])
-
-  def on_return(event=None):
-    for i in range(len(parms.flavors)):
-      if currentFlavor == parms.flavors[i].name:
-        parms.flavors[i].name = nameText.value
-    updateFlavorList()
-    hide_keyboard()
