@@ -30,9 +30,9 @@ def editFlavor():
     flavorWindow.destroy()
 
   def createNewFlavor():
-    #show_keyboard()
+    show_keyboard()
     flavorQuestion = flavorWindow.question("Flavor Edit", "Enter new flavor name")
-    #hide_keyboard()
+    hide_keyboard()
     if (not flavorQuestion in parms.flavors):
       parms.flavors.append(parms.Flavor(flavorQuestion, "#ffffff"))
       flavorsList.append(flavorQuestion)

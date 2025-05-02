@@ -11,40 +11,40 @@ def sendFlavorValues(selection):
         if drinkFlavor == selectedFlavor:
           if j == 1:
             if (i == 1):
-              p1 = dispensingDrink.flavor1Perc
+              parms.modify_value(p1, dispensingDrink.flavor1Perc)
             elif (i == 2):
-              p1 = dispensingDrink.flavor2Perc
+              parms.modify_value(p1, dispensingDrink.flavor2Perc)
             elif (i == 3):
-              p1 = dispensingDrink.flavor3Perc
+              parms.modify_value(p1, dispensingDrink.flavor3Perc)
             elif (i == 4):
-              p1 = dispensingDrink.flavor4Perc
+              parms.modify_value(p1, dispensingDrink.flavor4Perc)
           elif j == 2:
             if (i == 1):
-              p2 = dispensingDrink.flavor1Perc
+              parms.modify_value(p2, dispensingDrink.flavor1Perc)
             elif (i == 2):
-              p2 = dispensingDrink.flavor2Perc
+              parms.modify_value(p2, dispensingDrink.flavor2Perc)
             elif (i == 3):
-              p2 = dispensingDrink.flavor3Perc
+              parms.modify_value(p2, dispensingDrink.flavor3Perc)
             elif (i == 4):
-              p2 = dispensingDrink.flavor4Perc
+              parms.modify_value(p2, dispensingDrink.flavor4Perc)
           elif j == 3:
             if (i == 1):
-              p3 = dispensingDrink.flavor1Perc
+              parms.modify_value(p3, dispensingDrink.flavor1Perc)
             elif (i == 2):
-              p3 = dispensingDrink.flavor2Perc
+              parms.modify_value(p3, dispensingDrink.flavor2Perc)
             elif (i == 3):
-              p3 = dispensingDrink.flavor3Perc
+              parms.modify_value(p3, dispensingDrink.flavor3Perc)
             elif (i == 4):
-              p3 = dispensingDrink.flavor4Perc
+              parms.modify_value(p3, dispensingDrink.flavor4Perc)
           elif j == 4:
             if (i == 1):
-              p4 = dispensingDrink.flavor1Perc
+              parms.modify_value(p4, dispensingDrink.flavor1Perc)
             elif (i == 2):
-              p4 = dispensingDrink.flavor2Perc
+              parms.modify_value(p4, dispensingDrink.flavor2Perc)
             elif (i == 3):
-              p4 = dispensingDrink.flavor3Perc
+              parms.modify_value(p4, dispensingDrink.flavor3Perc)
             elif (i == 4):
-              p4 = dispensingDrink.flavor4Perc
+              parms.modify_value(p4, dispensingDrink.flavor4Perc)
 
   dispensingDrink = parms.currentDrink['value']
   if selection != "custom":
@@ -54,11 +54,11 @@ def sendFlavorValues(selection):
   if (popup == False):
     return
 
-  p1 = 0
-  p2 = 0
-  p3 = 0
-  p4 = 0
-  p5 = 0
+  p1 = {'value':0}
+  p2 = {'value':0}
+  p3 = {'value':0}
+  p4 = {'value':0}
+  p5 = {'value':0}
 
   mapFlavorValues()
   

@@ -95,7 +95,7 @@ def init():
     favoritDrinksIndicator = "Favorite Drinks"
     allDrinksIndicator = "All Drinks"
     # Will have to modify when on PI:
-    settingsFileName = "C:\git\SodaShop\Code\Pi\settings.txt" # Work PC: "G:\seniorDesign\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
+    settingsFileName = "/home/nicwitulski/SeniorDesign/SodaShop/Code/Pi/settings.txt" # Work PC: "G:\seniorDesign\SodaShop\Code\Pi\settings.txt" | # Nic Laptop: "C:\git\SodaShop\Code\Pi\settings.txt"
     app = App() 
     app.set_full_screen()
 

@@ -26,7 +26,7 @@ def editDrink():
   # When Exit Button Pressed, Close New Drink Window
   def closeWindow():
     # TODO: Uncomment when on Pi
-    #hide_keyboard()
+    hide_keyboard()
     makeDrinkWindow.hide()
     makeDrinkWindow.destroy()
   
